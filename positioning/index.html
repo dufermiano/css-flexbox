@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSS Positioning</title>
+    <link rel="stylesheet" href="main.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="container" style="border: yellow solid 2px;">
+      <div class="box blueBox" id="caixa"></div>
+    </div>
+    <div class="box greenBox"></div>
+    <h1>Entendendo CSS Positioning</h1>
+    <p id="pokemon"></p>
+    <button onclick="show()">Mostra o pokemon</button>
+    <input type="text" id="inputMessage" />
+    <button id="btnSocket">Manda mensagem pro socket</button>
+    <div class="container">
+        <canvas id="canvas" width="400" height="400" style="border: 1px solid black; margin-top: 50px; background: white;"></canvas>
+    </div>
+    
+
+</body>
+
+  <script>
+      let isMouseDown = false;
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      context.fillStyle = '#00FF00';
+
+      let x = 0, y=0, width = 0, height =0;
+
+      canvas.onmousedown = event => {
+          if(event.button == 0) {
+              x = event.x;
+              y = event.y;
+              isMouseDown = true;
+          }
+      }
+
+      canvas.onmousemove = event => {
+        if (isMouseDown) {
+            context.clearRect(x, y, width, height);
+            width = event.x - x;
+            height = event.y - y;
+            context.fillRect(x, y, width, height);
+        }
+      }
+
+      canvas.onmouseup = event => {
+          isMouseDown = false;
+      }
+
+
+  </script>
+
+  <!-- <script>
+    window.onload = () => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+            console.log(position);
+        }, error => {console.log(error)});
+
+
+    } else {
+        alert("Ops, geolocalização não disponível");
+      }
+    };
+  </script> -->
+
+  <script type="text/javascript">
+    function show() {
+      if (window.Worker) {
+        let myWorker = new Worker("worker.js");
+        // console.log('instancia de web worker');
+
+        myWorker.postMessage(null);
+
+        myWorker.onmessage = e => {
+          alert(JSON.stringify(e.data, null, 2));
+        };
+      }
+    }
+  </script>
+
+  <!-- <script src="websocket.js"></script> -->
+</html>

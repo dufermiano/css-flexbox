@@ -1,0 +1,8 @@
+{
+    "version": "0.1.0",
+    "command": "Firefox",
+    "windows": {
+        "command": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+    },
+    "args": ["${file}"]
+}
